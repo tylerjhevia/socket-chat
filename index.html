@@ -73,15 +73,19 @@
                 $('#messages').append($('<li>').text(msg));
             });
 
-            $('#m').on('input', () => {
-                if ($('#m').val() === '') {
-                    socket.emit($('.typing-message').remove())
-                }
-                else {
-                    socket.emit($('.typing-message').remove())
-                    socket.emit($('#messages').append("<li class='typing-message'>Typing...</li>"));
-                }
+            socket.on('typing message', message => {
+                console.log(message)
             })
+
+            // $('#m').on('input', () => {
+            //     if ($('#m').val() === '') {
+            //         socket.emit($('.typing-message').remove())
+            //     }
+            //     else {
+            //         socket.emit($('.typing-message').remove())
+            //         socket.emit($('#messages').append("<li class='typing-message'>Typing...</li>"));
+            //     }
+            // })
 
             $('#m').on('blur', () => {
                 $('.typing-message').remove()
