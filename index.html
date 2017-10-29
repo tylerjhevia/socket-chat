@@ -53,7 +53,8 @@
 </head>
 
 <body>
-    <ul id="messages"></ul>
+    <ul id="messages">
+    </ul>
     <form action="">
         <input id="m" autocomplete="off" /><button>Send</button>
     </form>
@@ -68,10 +69,25 @@
                 return false;
             });
             socket.on('chat message', function (msg) {
+                $('.typing-message').remove()
                 $('#messages').append($('<li>').text(msg));
             });
-        });
 
+            $('#m').on('input', () => {
+                if ($('#m').val() === '') {
+                    socket.emit($('.typing-message').remove())
+                }
+                else {
+                    socket.emit($('.typing-message').remove())
+                    socket.emit($('#messages').append("<li class='typing-message'>Typing...</li>"));
+                }
+            })
+
+            $('#m').on('blur', () => {
+                $('.typing-message').remove()
+            })
+
+        });
     </script>
 
 </body>
