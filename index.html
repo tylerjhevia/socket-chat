@@ -73,27 +73,39 @@
                 $('#messages').append($('<li>').text(msg));
             });
 
-            socket.on('typing message', message => {
-                console.log(message)
+            socket.on('connected', msg => {
+                $('#messages').append($('<li>').text(msg))
             })
-
-            // $('#m').on('input', () => {
-            //     if ($('#m').val() === '') {
-            //         socket.emit($('.typing-message').remove())
-            //     }
-            //     else {
-            //         socket.emit($('.typing-message').remove())
-            //         socket.emit($('#messages').append("<li class='typing-message'>Typing...</li>"));
-            //     }
-            // })
-
-            $('#m').on('blur', () => {
-                $('.typing-message').remove()
-            })
-
         });
     </script>
 
 </body>
 
 </html>
+
+
+<!--$(() => {
+        const socket = io();
+        $('form').submit(() => {
+          socket.emit('chat message', {nickname: $('#nickname').val(), message: $('#m').val()});
+          $('#m').val('');
+          return false;
+        });
+        socket.on('logged in', msg => {
+          $('#messages').append($('<li>').text(msg))
+        })
+        socket.on('chat message', msg => {
+          $('#messages').append($('<li>').text(`${msg.nickname || 'Guest'}: ${msg.message}`));
+        });
+        socket.on('logged out', msg => {
+          $('#messages').append($('<li>').text(msg));
+        });
+        socket.on('is typing', msg => {
+          $('.typing').text(msg);
+          setTimeout(() => $('.typing').text(''), 1000);
+        })
+        const isTyping = () => {
+          socket.emit('typing', 'User is currently typing...')
+        }
+        $('#m').on('input', isTyping)
+      });-->
