@@ -20,11 +20,15 @@ io.on('connection', function(socket) {
 io.on('connection', function(socket) {
   io.emit('connected', 'Someone has connected');
 
-  socket.on('chat message', function(msg) {
-    io.emit('chat message', msg);
+  socket.on('chat message', function(message) {
+    io.emit('chat message', message);
   });
 
-  socket.on('typing', message => {
-    io.emit('typing message', messsage);
+  socket.on('disconnect', function() {
+    io.emit('disconnect', 'Someone has disconnected.');
+  });
+
+  socket.on('typing', function() {
+    io.emit('typing message', 'Someone is typing...');
   });
 });
