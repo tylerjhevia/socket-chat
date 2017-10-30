@@ -68,14 +68,30 @@
                 $('#m').val('');
                 return false;
             });
-            socket.on('chat message', function (msg) {
-                $('.typing-message').remove()
-                $('#messages').append($('<li>').text(msg));
+            socket.on('chat message', function (message) {
+                $('#messages').append($('<li>').text(message));
             });
 
-            socket.on('connected', msg => {
-                $('#messages').append($('<li>').text(msg))
+            socket.on('connected', function (message) {
+                $('#messages').append($('<li>').text(message))
             })
+
+            socket.on('typing message', function (message) {
+                if ($('.typing-message').length === 0) {
+                    $('#messages').append($(`<li class="typing-message">${message}</li>`))
+                }
+                setTimeout(function () { $('.typing-message').remove() }, 2000)
+            })
+
+            socket.on('disconnect', function (message) {
+                $('#messages').append($('<li>').text(message));
+            });
+
+            function typing() {
+                socket.emit('typing', 'Someone is typing...');
+            }
+
+            $('#m').on('input', typing);
         });
     </script>
 
